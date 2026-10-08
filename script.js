@@ -198,94 +198,25 @@ function salvarEntrega() {
 
   alert("Entrega salva com sucesso!");
 
-  function exportarBackup() {
-    const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
+  mostrarHistorico();
+}
 
-    if (entregas.length === 0) {
-      alert("Não existem entregas para exportar.");
-      return;
-    }
+function cancelarEntrega(index) {
+  const confirmou = confirm("Deseja realmente cancelar esta entrega?");
 
-    const dados = JSON.stringify(entregas, null, 2);
-
-    const arquivo = new Blob([dados], { type: "application/json" });
-
-    const url = URL.createObjectURL(arquivo);
-
-    const link = document.createElement("a");
-
-    const data = new Date().toISOString().slice(0, 10);
-
-    link.href = url;
-
-    link.download = `parana-log-backup-${data}.json`;
-
-    link.click();
-
-    URL.revokeObjectURL(url);
-
-    alert("Backup exportado com sucesso!");
+  if (!confirmou) {
+    return;
   }
 
-  function selecionarBackup() {
-    document.getElementById("arquivoBackup").click();
-  }
+  const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
 
-  function importarBackup(evento) {
-    const arquivo = evento.target.files[0];
+  entregas.splice(index, 1);
 
-    if (!arquivo) {
-      return;
-    }
-
-    const leitor = new FileReader();
-
-    leitor.onload = function () {
-      try {
-        const dados = JSON.parse(leitor.result);
-
-        if (!Array.isArray(dados)) {
-          throw new Error("Formato inválido");
-        }
-
-        const confirmou = confirm(
-          "Deseja restaurar este backup? " +
-            "As entregas atuais serão substituídas.",
-        );
-
-        if (!confirmou) {
-          evento.target.value = "";
-          return;
-        }
-
-        localStorage.setItem("entregas", JSON.stringify(dados));
-
-        mostrarHistorico();
-
-        alert("Backup restaurado com sucesso!");
-      } catch (erro) {
-        alert("Não foi possível importar o backup.");
-      }
-
-      evento.target.value = "";
-    };
-
-    leitor.readAsText(arquivo);
-  }
-
-  document
-    .getElementById("exportarBackup")
-    .addEventListener("click", exportarBackup);
-
-  document
-    .getElementById("importarBackup")
-    .addEventListener("click", selecionarBackup);
-
-  document
-    .getElementById("arquivoBackup")
-    .addEventListener("change", importarBackup);
+  localStorage.setItem("entregas", JSON.stringify(entregas));
 
   mostrarHistorico();
+
+  alert("Entrega cancelada com sucesso!");
 }
 
 function mostrarHistorico() {
@@ -398,6 +329,13 @@ function mostrarHistorico() {
       <small>
         ${entrega.data || "Data não informada"}
       </small>
+
+      <button
+        class="cancelar"
+        onclick="cancelarEntrega(${index})"
+      >
+        ❌ CANCELAR ENTREGA
+      </button>
     `;
 
     historico.appendChild(item);
@@ -424,5 +362,91 @@ document.getElementById("copiar").addEventListener("click", async function () {
     alert("Não foi possível copiar automaticamente.");
   }
 });
+function exportarBackup() {
+  const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
+
+  if (entregas.length === 0) {
+    alert("Não existem entregas para exportar.");
+    return;
+  }
+
+  const dados = JSON.stringify(entregas, null, 2);
+
+  const arquivo = new Blob([dados], { type: "application/json" });
+
+  const url = URL.createObjectURL(arquivo);
+
+  const link = document.createElement("a");
+
+  const data = new Date().toISOString().slice(0, 10);
+
+  link.href = url;
+
+  link.download = `parana-log-backup-${data}.json`;
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+
+  alert("Backup exportado com sucesso!");
+}
+
+function selecionarBackup() {
+  document.getElementById("arquivoBackup").click();
+}
+
+function importarBackup(evento) {
+  const arquivo = evento.target.files[0];
+
+  if (!arquivo) {
+    return;
+  }
+
+  const leitor = new FileReader();
+
+  leitor.onload = function () {
+    try {
+      const dados = JSON.parse(leitor.result);
+
+      if (!Array.isArray(dados)) {
+        throw new Error("Formato inválido");
+      }
+
+      const confirmou = confirm(
+        "Deseja restaurar este backup? " +
+          "As entregas atuais serão substituídas.",
+      );
+
+      if (!confirmou) {
+        evento.target.value = "";
+        return;
+      }
+
+      localStorage.setItem("entregas", JSON.stringify(dados));
+
+      mostrarHistorico();
+
+      alert("Backup restaurado com sucesso!");
+    } catch (erro) {
+      alert("Não foi possível importar o backup.");
+    }
+
+    evento.target.value = "";
+  };
+
+  leitor.readAsText(arquivo);
+}
+
+document
+  .getElementById("exportarBackup")
+  .addEventListener("click", exportarBackup);
+
+document
+  .getElementById("importarBackup")
+  .addEventListener("click", selecionarBackup);
+
+document
+  .getElementById("arquivoBackup")
+  .addEventListener("change", importarBackup);
 
 mostrarHistorico();
