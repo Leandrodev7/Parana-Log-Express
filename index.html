@@ -1,123 +1,192 @@
-[
-  {
-    "cliente": "João Silva",
-    "origem": "Curitiba",
-    "destino": "São José dos Pinhais",
-    "km": 30,
-    "diesel": 7.14,
-    "consumo": 3,
-    "outras": 18.9,
-    "valorEntrega": 51,
-    "custoTotal": 90.29999999999998,
-    "lucro": -39.29999999999998,
-    "margem": -77.05882352941174,
-    "data": "05/10/2026, 21:56:52"
-  },
-  {
-    "cliente": "Teste",
-    "origem": "Curitiba",
-    "destino": "São José dos pinhais",
-    "veiculo": "truck",
-    "km": 30,
-    "diesel": 7.14,
-    "consumo": 3,
-    "outras": 18.9,
-    "valorEntrega": 51,
-    "custoTotal": 90.29999999999998,
-    "lucro": -39.29999999999998,
-    "margem": -77.05882352941174,
-    "data": "05/10/2026, 22:35:43"
-  },
-  {
-    "cliente": "Lucas",
-    "origem": "Curitiba",
-    "destino": "Campo magro",
-    "veiculo": "truck",
-    "tipoCarga": "carga_geral",
-    "km": 120,
-    "diesel": 7.14,
-    "consumo": 3,
-    "outras": 50,
-    "valorEntrega": 150,
-    "custoTotal": 335.59999999999997,
-    "lucro": -185.59999999999997,
-    "margem": -123.73333333333332,
-    "data": "05/10/2026, 22:45:41"
-  },
-  {
-    "cliente": "Luiz",
-    "origem": "Curitiba",
-    "destino": "Campo Largo",
-    "veiculo": "Truck",
-    "tipoCarga": "Carga Geral",
-    "eixos": "4",
-    "km": 170,
-    "diesel": 6,
-    "consumo": 3,
-    "pedagio": 50,
-    "outras": 20,
-    "valorCobrado": 700,
-    "custoCombustivel": 340,
-    "custoTotal": 410,
-    "lucro": 290,
-    "margem": 41.42857142857143,
-    "data": "07/10/2026, 20:03:22"
-  },
-  {
-    "cliente": "Luiz",
-    "origem": "Curitiba",
-    "destino": "Campo Largo",
-    "veiculo": "Truck",
-    "tipoCarga": "Carga Geral",
-    "eixos": "4",
-    "km": 170,
-    "diesel": 6,
-    "consumo": 3,
-    "pedagio": 50,
-    "outras": 20,
-    "valorCobrado": 700,
-    "custoCombustivel": 340,
-    "custoTotal": 410,
-    "lucro": 290,
-    "margem": 41.42857142857143,
-    "data": "07/10/2026, 20:03:22"
-  },
-  {
-    "cliente": "Luiz",
-    "origem": "Curitiba",
-    "destino": "São Paulo",
-    "veiculo": "Truck",
-    "tipoCarga": "Carga Geral",
-    "eixos": "4",
-    "km": 170,
-    "diesel": 6,
-    "consumo": 3,
-    "pedagio": 50,
-    "outras": 20,
-    "valorCobrado": 700,
-    "custoCombustivel": 340,
-    "custoTotal": 410,
-    "lucro": 290,
-    "margem": 41.42857142857143,
-    "data": "07/10/2026, 20:14:36"
-  },
-  {
-    "cliente": "Transportadora Alfa",
-    "origem": "Curitiba",
-    "destino": "Ponta Grossa",
-    "veiculo": "Truck",
-    "tipoCarga": "Carga Geral",
-    "eixos": "6",
-    "km": 120,
-    "diesel": 6,
-    "consumo": 3,
-    "pedagio": 30,
-    "outras": 15,
-    "valorCobrado": 370,
-    "custoCombustivel": 240,
-    "custoTotal": 285,
-    "lucro": 85,
-    "margem": 22.972972972972975,
-    "data": "07/10/2026, 20:36:00"
-  }
-]
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Paraná Log Express, ferramenta de cálculo e controle de entregas e fretes."
+    />
+
+    <title>Paraná Log Express | Gestão de Fretes</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="card">
+      <header class="cabecalho">
+        <div class="marca">
+          <span class="icone">🚚</span>
+
+          <div>
+            <h1>Paraná Log Express</h1>
+
+            <p class="descricao">Gestão de fretes e entregas</p>
+          </div>
+        </div>
+      </header>
+
+      <section>
+        <h2>Nova Entrega</h2>
+
+        <input id="cliente" type="text" placeholder="Nome do cliente" />
+
+        <input id="origem" type="text" placeholder="Local de origem" />
+
+        <input id="destino" type="text" placeholder="Local de destino" />
+
+        <select id="veiculo">
+          <option value="">Selecione o veículo</option>
+          <option value="Moto">Moto</option>
+          <option value="Carro">Carro</option>
+          <option value="Van">Van</option>
+          <option value="HR">HR</option>
+          <option value="3/4">3/4</option>
+          <option value="Toco">Toco</option>
+          <option value="Truck">Truck</option>
+          <option value="Carreta">Carreta</option>
+          <option value="9 eixos">9 eixos</option>
+        </select>
+
+        <select id="tipoCarga">
+          <option value="">Selecione o tipo de carga</option>
+          <option value="Carga Geral">Carga Geral</option>
+          <option value="Granel Sólido">Granel Sólido</option>
+          <option value="Granel Líquido">Granel Líquido</option>
+          <option value="Frigorificada/Aquecida">Frigorificada/Aquecida</option>
+          <option value="Conteinerizada">Conteinerizada</option>
+        </select>
+
+        <select id="eixos">
+          <option value="">Selecione o número de eixos</option>
+          <option value="2">2 eixos</option>
+          <option value="3">3 eixos</option>
+          <option value="4">4 eixos</option>
+          <option value="5">5 eixos</option>
+          <option value="6">6 eixos</option>
+          <option value="7">7 eixos</option>
+          <option value="9">9 eixos</option>
+        </select>
+
+        <input
+          id="km"
+          type="number"
+          min="0"
+          step="0.1"
+          placeholder="Distância em KM"
+        />
+
+        <input
+          id="combustivel"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Preço do diesel por litro"
+        />
+
+        <input
+          id="consumo"
+          type="number"
+          min="0"
+          step="0.1"
+          placeholder="Consumo do caminhão (km/L)"
+        />
+
+        <input
+          id="pedagio"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Pedágios"
+        />
+
+        <input
+          id="outras"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Outras despesas"
+        />
+
+        <input
+          id="valorCobrado"
+          type="number"
+          min="0"
+          step="0.01"
+          placeholder="Valor cobrado pelo frete"
+        />
+
+        <button id="btn">🧮 CALCULAR ENTREGA</button>
+
+        <button id="salvar" class="sec">💾 SALVAR ENTREGA</button>
+      </section>
+
+      <section>
+        <h2>Resultado</h2>
+
+        <div class="resultado">
+          <div class="indicador">
+            <p>Valor da entrega</p>
+            <h3 id="valor">R$ 0,00</h3>
+          </div>
+
+          <div class="indicador">
+            <p>Custo da viagem</p>
+            <h3 id="custo">R$ 0,00</h3>
+          </div>
+
+          <div class="indicador">
+            <p>Lucro estimado</p>
+            <h3 id="lucro">R$ 0,00</h3>
+          </div>
+
+          <div class="indicador">
+            <p>Margem de lucro</p>
+            <h3 id="margem">0%</h3>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Pagamento PIX</h2>
+
+        <div class="qr-box">
+          <img id="qr" alt="QR Code para pagamento PIX" />
+
+          <span id="aviso"> QR Code aparece aqui </span>
+        </div>
+
+        <div id="pix"></div>
+
+        <button id="copiar" class="sec">📋 COPIAR PIX</button>
+      </section>
+
+      <section>
+        <h2>Histórico de Entregas</h2>
+
+        <div id="historico"></div>
+        <button id="exportarBackup" class="sec">📥 EXPORTAR BACKUP</button>
+
+        <button id="importarBackup" class="sec">📤 IMPORTAR BACKUP</button>
+
+        <input
+          type="file"
+          id="arquivoBackup"
+          accept=".json"
+          style="display: none"
+        />
+      </section>
+
+      <footer class="rodape">
+        Paraná Log Express
+        <span>•</span>
+        Gestão de fretes
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
