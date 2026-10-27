@@ -23,7 +23,7 @@ O Paraná Log Express é um projeto desenvolvido para ajudar no controle de entr
 
 ## Acesse o projeto
 
-🌐 **Site publicado:** https://parana-log-express.netlify.app/
+🌐 **Site publicado:** https://parana-log-express.leandromassuquetto.workers.dev/
 
 💻 **GitHub:** https://github.com/Leandrodev7/Parana-Log-Express
 
