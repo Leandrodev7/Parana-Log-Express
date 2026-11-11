@@ -52,27 +52,62 @@ function gerarPix(valor) {
 function formatarReais(valor) {
   const numero = Number(valor);
 
-  if (isNaN(numero)) {
+  if (!Number.isFinite(numero)) {
     return "R$ 0,00";
   }
 
-  return "R$ " + numero.toFixed(2).replace(".", ",");
+  return (
+    "R$ " +
+    numero.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+  );
+}
+
+function lerNumero(id) {
+  let valor = document.getElementById(id).value.trim().replace(/\s/g, "");
+
+  if (!valor) {
+    return NaN;
+  }
+
+  valor = valor.replace(/^R\$/i, "");
+
+  const ultimaVirgula = valor.lastIndexOf(",");
+  const ultimoPonto = valor.lastIndexOf(".");
+
+  if (ultimaVirgula !== -1 && ultimoPonto !== -1) {
+    valor =
+      ultimaVirgula > ultimoPonto
+        ? valor.replace(/\./g, "").replace(",", ".")
+        : valor.replace(/,/g, "");
+  } else if (ultimaVirgula !== -1) {
+    valor = valor.replace(",", ".");
+  } else if (/^-?\d{1,3}(?:\.\d{3})+$/.test(valor)) {
+    valor = valor.replace(/\./g, "");
+  }
+
+  const numero = Number(valor);
+
+  return Number.isFinite(numero) ? numero : NaN;
 }
 
 function calcular() {
-  const km = parseFloat(document.getElementById("km").value);
+  const km = lerNumero("km");
 
-  const diesel = parseFloat(document.getElementById("combustivel").value);
+  const diesel = lerNumero("combustivel");
 
-  const consumo = parseFloat(document.getElementById("consumo").value);
+  const consumo = lerNumero("consumo");
 
-  const pedagio = parseFloat(document.getElementById("pedagio").value);
+  const pedagio = lerNumero("pedagio");
 
-  const outras = parseFloat(document.getElementById("outras").value);
+  const outras = lerNumero("outras");
 
-  const valorCobrado = parseFloat(
-    document.getElementById("valorCobrado").value,
-  );
+  const valorCobrado = lerNumero("valorCobrado");
+
+  const pedagioPreenchido = document.getElementById("pedagio").value.trim();
+  const outrasPreenchidas = document.getElementById("outras").value.trim();
 
   const valorElemento = document.getElementById("valor");
 
@@ -96,9 +131,13 @@ function calcular() {
     isNaN(consumo) ||
     consumo <= 0 ||
     isNaN(valorCobrado) ||
-    valorCobrado <= 0
+    valorCobrado <= 0 ||
+    (pedagioPreenchido && (isNaN(pedagio) || pedagio < 0)) ||
+    (outrasPreenchidas && (isNaN(outras) || outras < 0))
   ) {
-    alert("Preencha KM, diesel, consumo e valor cobrado pelo frete.");
+    alert(
+      "Confira os valores informados. Use vírgula nos centavos e ponto para separar milhares.",
+    );
 
     return;
   }
@@ -143,7 +182,8 @@ function calcular() {
     "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
     encodeURIComponent(payload);
 
-  qr.style.display = "block";
+  qr.removeAttribute("hidden");
+  pixElemento.removeAttribute("hidden");
 
   aviso.style.display = "none";
 
@@ -219,18 +259,32 @@ function cancelarEntrega(index) {
   alert("Entrega cancelada com sucesso!");
 }
 
+function criarDetalhe(rotulo, valor) {
+  const linha = document.createElement("p");
+  const nome = document.createElement("strong");
+  const conteudo = document.createElement("span");
+
+  nome.textContent = rotulo + ":";
+  conteudo.textContent = valor;
+  linha.append(nome, conteudo);
+
+  return linha;
+}
+
 function mostrarHistorico() {
-  const historico = document.getElementById("historico");
+  const historico = document.getElementById("lista-entregas");
 
   const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
 
   if (entregas.length === 0) {
-    historico.innerHTML = "<p>Nenhuma entrega registrada.</p>";
+    const vazio = document.createElement("p");
+    vazio.textContent = "Nenhuma entrega registrada.";
+    historico.replaceChildren(vazio);
 
     return;
   }
 
-  historico.innerHTML = "";
+  historico.replaceChildren();
 
   entregas.forEach((entrega, index) => {
     const item = document.createElement("div");
@@ -254,93 +308,95 @@ function mostrarHistorico() {
 
     const classeLucro = lucro >= 0 ? "lucro-positivo" : "lucro-negativo";
 
-    item.innerHTML = `
-      <strong>Entrega ${index + 1}</strong>
+    const titulo = document.createElement("strong");
+    titulo.textContent = `Entrega ${index + 1}`;
+    item.appendChild(titulo);
 
-      <p>
-        <strong>Cliente:</strong>
-        ${entrega.cliente || "Não informado"}
-      </p>
+    item.append(
+      criarDetalhe("Cliente", entrega.cliente || "Não informado"),
+      criarDetalhe(
+        "Rota",
+        `${entrega.origem || "Não informado"} → ${entrega.destino || "Não informado"}`,
+      ),
+      criarDetalhe("Veículo", entrega.veiculo || "Não informado"),
+      criarDetalhe("Tipo de carga", entrega.tipoCarga || "Não informado"),
+      criarDetalhe(
+        "Eixos",
+        entrega.eixos ? `${entrega.eixos} eixos` : "Não informado",
+      ),
+      criarDetalhe("Distância", `${entrega.km || 0} km`),
+      criarDetalhe("Diesel", `${formatarReais(diesel)}/L`),
+      criarDetalhe("Pedágio", formatarReais(pedagio)),
+      criarDetalhe("Outras despesas", formatarReais(outras)),
+      criarDetalhe("Valor cobrado", formatarReais(valorCobrado)),
+      criarDetalhe("Custo", formatarReais(custoTotal)),
+    );
 
-      <p>
-        <strong>Rota:</strong>
-        ${entrega.origem || "Não informado"}
-        →
-        ${entrega.destino || "Não informado"}
-      </p>
+    const linhaLucro = criarDetalhe("Lucro", formatarReais(lucro));
+    linhaLucro.lastElementChild.className = classeLucro;
+    item.append(linhaLucro);
+    item.appendChild(
+      criarDetalhe("Margem", `${margem.toFixed(2).replace(".", ",")}%`),
+    );
 
-      <p>
-        <strong>Veículo:</strong>
-        ${entrega.veiculo || "Não informado"}
-      </p>
+    const data = document.createElement("small");
+    data.textContent = entrega.data || "Data não informada";
+    item.appendChild(data);
 
-      <p>
-        <strong>Tipo de carga:</strong>
-        ${entrega.tipoCarga || "Não informado"}
-      </p>
-
-      <p>
-        <strong>Eixos:</strong>
-        ${entrega.eixos ? entrega.eixos + " eixos" : "Não informado"}
-      </p>
-
-      <p>
-        <strong>Distância:</strong>
-        ${entrega.km || 0} km
-      </p>
-
-      <p>
-        <strong>Diesel:</strong>
-        ${formatarReais(diesel)}/L
-      </p>
-
-      <p>
-        <strong>Pedágio:</strong>
-        ${formatarReais(pedagio)}
-      </p>
-
-      <p>
-        <strong>Outras despesas:</strong>
-        ${formatarReais(outras)}
-      </p>
-
-      <p>
-        <strong>Valor cobrado:</strong>
-        ${formatarReais(valorCobrado)}
-      </p>
-
-      <p>
-        <strong>Custo:</strong>
-        ${formatarReais(custoTotal)}
-      </p>
-
-      <p>
-        <strong>Lucro:</strong>
-        <span class="${classeLucro}">
-          ${formatarReais(lucro)}
-        </span>
-      </p>
-
-      <p>
-        <strong>Margem:</strong>
-        ${margem.toFixed(2).replace(".", ",")}%
-      </p>
-
-      <small>
-        ${entrega.data || "Data não informada"}
-      </small>
-
-      <button
-        class="cancelar"
-        onclick="cancelarEntrega(${index})"
-      >
-        ❌ CANCELAR ENTREGA
-      </button>
-    `;
+    const botaoCancelar = document.createElement("button");
+    botaoCancelar.type = "button";
+    botaoCancelar.className = "cancelar";
+    botaoCancelar.textContent = "Cancelar entrega";
+    botaoCancelar.addEventListener("click", () => cancelarEntrega(index));
+    item.appendChild(botaoCancelar);
 
     historico.appendChild(item);
   });
 }
+
+function iniciarNovaEntrega() {
+  const campos = [
+    "cliente",
+    "origem",
+    "destino",
+    "veiculo",
+    "tipoCarga",
+    "eixos",
+    "km",
+    "combustivel",
+    "consumo",
+    "pedagio",
+    "outras",
+    "valorCobrado",
+  ];
+
+  campos.forEach((id) => {
+    document.getElementById(id).value = "";
+  });
+
+  document.getElementById("valor").innerText = "R$ 0,00";
+  document.getElementById("custo").innerText = "R$ 0,00";
+  document.getElementById("lucro").innerText = "R$ 0,00";
+  document.getElementById("margem").innerText = "0%";
+  document
+    .getElementById("lucro")
+    .classList.remove("lucro-positivo", "lucro-negativo");
+
+  const qr = document.getElementById("qr");
+  qr.setAttribute("hidden", "");
+  qr.removeAttribute("src");
+
+  const pix = document.getElementById("pix");
+  pix.textContent = "";
+  pix.setAttribute("hidden", "");
+
+  document.getElementById("aviso").style.display = "";
+  ultimaEntrega = null;
+}
+
+document.querySelectorAll('a[href="#nova-entrega"]').forEach((atalho) => {
+  atalho.addEventListener("click", iniciarNovaEntrega);
+});
 
 document.getElementById("btn").addEventListener("click", calcular);
 

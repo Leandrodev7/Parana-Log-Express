@@ -1,34 +1,31 @@
 # Paraná Log Express
 
-Sistema de gestão de fretes, entregas, custos e lucros.
+Aplicação web para calcular custos de frete e organizar entregas.
 
-O Paraná Log Express é um projeto desenvolvido para ajudar no controle de entregas e no cálculo dos custos de transporte, facilitando o acompanhamento dos resultados de cada frete.
+## O que a aplicação faz
 
-## Funcionalidades
+- Estima o custo de combustível a partir da distância, do consumo e do preço do diesel.
+- Soma pedágios e outras despesas informadas.
+- Compara o custo da viagem com o valor cobrado e apresenta lucro e margem estimados.
+- Salva entregas no navegador e permite consultar, cancelar, exportar e importar o histórico.
+- Gera um código PIX e um QR Code com o valor informado para o frete.
 
-- Cálculo de custos com combustível.
-- Controle de pedágios e outras despesas.
-- Cálculo de lucro e margem por frete.
-- Registro e histórico de entregas.
-- Geração de código PIX e QR Code.
-- Exportação e importação de backups em JSON.
+## Como usar
 
-## Tecnologias utilizadas
+Abra `index.html` em um navegador, preencha os dados da entrega e selecione **Calcular entrega**. Para guardar o cálculo no histórico deste navegador, selecione **Salvar entrega**.
 
-- HTML5
-- CSS3
-- JavaScript
-- LocalStorage
-- Netlify
+O histórico fica no armazenamento local do navegador. Use **Exportar backup** para guardar uma cópia dos dados. A importação substitui o histórico atual, mediante confirmação.
 
-## Acesse o projeto
+## Tecnologias
 
-🌐 **Site publicado:** https://parana-log-express.leandromassuquetto.workers.dev/
+- HTML, CSS e JavaScript
+- `localStorage` para o histórico
+- Umami Analytics para acompanhamento de visitas
+- QRServer para gerar a imagem do QR Code PIX
 
-💻 **GitHub:** https://github.com/Leandrodev7/Parana-Log-Express
+## Links
 
-## Objetivo
+- **Aplicação publicada:** https://parana-log-express.leandromassuquetto.workers.dev/
+- **Repositório:** https://github.com/Leandrodev7/Parana-Log-Express
 
-Projeto desenvolvido como parte do meu aprendizado em programação, com foco na criação de uma aplicação prática para controle de fretes e gestão de custos.
-
-Desenvolvido por **Leandro DEV7**.
+O projeto é uma ferramenta de estimativa: os valores dependem dos dados informados e dos custos incluídos no cálculo.

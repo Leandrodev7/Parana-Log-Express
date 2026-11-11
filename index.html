@@ -2,16 +2,34 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="google-site-verification" content="TGsjyDRWBZBhSeW3Xfx05qmMKR8Yno3z0uFAJL3Du80" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta name="google-site-verification" content="TGsjyDRWBZBhSeW3Xfx05qmMKR8Yno3z0uFAJL3Du80" />
     <meta
       name="description"
-      content="Paraná Log Express, ferramenta de cálculo e controle de entregas e fretes."
+      content="Calcule custos de frete com combustível, pedágios e outras despesas. Acompanhe lucro e margem e registre suas entregas."
     />
-
-    <title>Paraná Log Express | Gestão de Fretes</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f3f5f2" />
+    <link
+      rel="canonical"
+      href="https://parana-log-express.leandromassuquetto.workers.dev/"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Paraná Log Express" />
+    <meta
+      property="og:title"
+      content="Paraná Log Express | Calculadora de frete"
+    />
+    <meta
+      property="og:description"
+      content="Calcule custos de frete, acompanhe lucro e margem e registre suas entregas."
+    />
+    <meta
+      property="og:url"
+      content="https://parana-log-express.leandromassuquetto.workers.dev/"
+    />
+    <title>Paraná Log Express | Calculadora de frete e entregas</title>
 
     <!-- Acompanhamento de visitas com Umami Analytics -->
     <script
@@ -24,176 +42,247 @@
   </head>
 
   <body>
-    <div class="card">
-      <header class="cabecalho">
-        <div class="marca">
-          <span class="icone">🚚</span>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
+    <div class="app-shell">
+      <aside class="barra-lateral" aria-label="Navegação principal">
+        <a class="marca" href="./" aria-label="Paraná Log Express, início">
+          <span class="marca-icone" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M5 11h18v16H5zM23 17h7l5 6v4H23z" />
+              <path d="M28 17v6h7M10 31a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM29 31a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+              <path d="M13 16h7" />
+            </svg>
+          </span>
+          <span class="marca-texto">
+            <span class="marca-nome">PARANÁ LOG</span>
+            <span class="marca-descricao">EXPRESS <i></i> GESTÃO DE FRETES</span>
+          </span>
+        </a>
+
+        <div class="navegacao-titulo">OPERAÇÃO</div>
+        <nav class="navegacao">
+          <a href="#nova-entrega">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16M4 12h16M4 18.5h10" /><path d="M17 16v5m-2.5-2.5h5" /></svg>
+            Nova entrega
+          </a>
+          <a href="#resultado">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16M6.5 16V11m5 5V5m5 11v-7" /></svg>
+            Resultado
+          </a>
+          <a href="#pagamento">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 4.5h3l9 9-4.5 4.5-9-9v-3z" /><path d="m9 8 7 7m-7 0 5-5" /></svg>
+            Pagamento PIX
+          </a>
+          <a href="#historico">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.5h14v12H5zM8 4.5v5m8-5v5M5 11h14" /></svg>
+            Histórico
+          </a>
+        </nav>
+
+        <div class="barra-lateral-rodape">
+          <span class="status-ponto" aria-hidden="true"></span>
           <div>
-            <h1>Paraná Log Express</h1>
-
-            <p class="descricao">Gestão de fretes e entregas</p>
+            <strong>Dados no dispositivo</strong>
+            <span>O histórico fica salvo neste navegador.</span>
           </div>
         </div>
-      </header>
+      </aside>
 
-      <section>
-        <h2>Nova Entrega</h2>
+      <div class="area-trabalho">
+        <header class="site-header">
+          <div class="caminho-pagina">
+            <span>Paraná Log Express</span>
+            <span aria-hidden="true">/</span>
+            <strong>Gestão de fretes</strong>
+          </div>
+          <div class="status-local">
+            <span class="status-ponto" aria-hidden="true"></span>
+            Histórico salvo localmente
+          </div>
+        </header>
 
-        <input id="cliente" type="text" placeholder="Nome do cliente" />
+        <main id="conteudo">
+          <section class="introducao" aria-labelledby="titulo-principal">
+            <div>
+              <p class="sobretitulo">CONTROLE DE ENTREGAS</p>
+              <h1 id="titulo-principal">Gestão de fretes</h1>
+              <p>
+                Calcule os custos da viagem, confira o resultado e consulte as entregas registradas.
+              </p>
+            </div>
+            <a class="atalho-nova-entrega" href="#nova-entrega">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              Nova entrega
+            </a>
+          </section>
 
-        <input id="origem" type="text" placeholder="Local de origem" />
+        <div class="dashboard-grid">
+          <div class="coluna-principal">
+            <section class="painel painel-formulario" id="nova-entrega" aria-labelledby="titulo-entrega">
+              <div class="painel-cabecalho">
+                <div>
+                  <h2 id="titulo-entrega">Nova entrega</h2>
+                </div>
+              </div>
 
-        <input id="destino" type="text" placeholder="Local de destino" />
+              <div class="form-grid">
+                <div class="campo">
+                  <label for="cliente">Cliente</label>
+                  <input id="cliente" type="text" placeholder="Nome do cliente" autocomplete="organization" />
+                </div>
+                <div class="campo">
+                  <label for="veiculo">Veículo</label>
+                  <select id="veiculo">
+                    <option value="">Selecione o veículo</option>
+                    <option value="Moto">Moto</option>
+                    <option value="Carro">Carro</option>
+                    <option value="Van">Van</option>
+                    <option value="HR">HR</option>
+                    <option value="3/4">3/4</option>
+                    <option value="Toco">Toco</option>
+                    <option value="Truck">Truck</option>
+                    <option value="Carreta">Carreta</option>
+                    <option value="9 eixos">9 eixos</option>
+                  </select>
+                </div>
+                <div class="campo">
+                  <label for="origem">Origem</label>
+                  <input id="origem" type="text" placeholder="Local de origem" autocomplete="off" />
+                </div>
+                <div class="campo">
+                  <label for="destino">Destino</label>
+                  <input id="destino" type="text" placeholder="Local de destino" autocomplete="off" />
+                </div>
+                <div class="campo">
+                  <label for="tipoCarga">Tipo de carga</label>
+                  <select id="tipoCarga">
+                    <option value="">Selecione o tipo de carga</option>
+                    <option value="Carga Geral">Carga Geral</option>
+                    <option value="Granel Sólido">Granel Sólido</option>
+                    <option value="Granel Líquido">Granel Líquido</option>
+                    <option value="Frigorificada/Aquecida">Frigorificada/Aquecida</option>
+                    <option value="Conteinerizada">Conteinerizada</option>
+                  </select>
+                </div>
+                <div class="campo">
+                  <label for="eixos">Número de eixos</label>
+                  <select id="eixos">
+                    <option value="">Selecione o número de eixos</option>
+                    <option value="2">2 eixos</option>
+                    <option value="3">3 eixos</option>
+                    <option value="4">4 eixos</option>
+                    <option value="5">5 eixos</option>
+                    <option value="6">6 eixos</option>
+                    <option value="7">7 eixos</option>
+                    <option value="9">9 eixos</option>
+                  </select>
+                </div>
+                <div class="campo">
+                  <label for="km">Distância <span>(km)</span></label>
+                  <input id="km" type="text" placeholder="Ex.: 250" inputmode="decimal" autocomplete="off" />
+                </div>
+                <div class="campo">
+                  <label for="combustivel">Preço do diesel <span>(R$/L)</span></label>
+                  <input id="combustivel" type="text" placeholder="Ex.: 6,20" inputmode="decimal" autocomplete="off" />
+                </div>
+                <div class="campo">
+                  <label for="consumo">Consumo do veículo <span>(km/L)</span></label>
+                  <input id="consumo" type="text" placeholder="Ex.: 8,5" inputmode="decimal" autocomplete="off" />
+                </div>
+                <div class="campo">
+                  <label for="pedagio">Pedágios <span>(R$)</span></label>
+                  <input id="pedagio" type="text" placeholder="Ex.: 120,00" inputmode="decimal" autocomplete="off" />
+                </div>
+                <div class="campo">
+                  <label for="outras">Outras despesas <span>(R$)</span></label>
+                  <input id="outras" type="text" placeholder="Ex.: 250,00" inputmode="decimal" autocomplete="off" />
+                </div>
+                <div class="campo">
+                  <label for="valorCobrado">Valor cobrado pelo frete <span>(R$)</span></label>
+                  <input id="valorCobrado" type="text" placeholder="Ex.: 7.000,00" inputmode="decimal" autocomplete="off" />
+                </div>
+              </div>
 
-        <select id="veiculo">
-          <option value="">Selecione o veículo</option>
-          <option value="Moto">Moto</option>
-          <option value="Carro">Carro</option>
-          <option value="Van">Van</option>
-          <option value="HR">HR</option>
-          <option value="3/4">3/4</option>
-          <option value="Toco">Toco</option>
-          <option value="Truck">Truck</option>
-          <option value="Carreta">Carreta</option>
-          <option value="9 eixos">9 eixos</option>
-        </select>
+              <div class="acoes-formulario">
+                <button id="btn" type="button">Calcular entrega</button>
+                <button id="salvar" class="sec" type="button">Salvar entrega</button>
+              </div>
+              <p class="ajuda-formulario">
+                O cálculo usa os valores informados acima. Confira se as despesas da viagem estão completas.
+              </p>
+            </section>
 
-        <select id="tipoCarga">
-          <option value="">Selecione o tipo de carga</option>
-          <option value="Carga Geral">Carga Geral</option>
-          <option value="Granel Sólido">Granel Sólido</option>
-          <option value="Granel Líquido">Granel Líquido</option>
-          <option value="Frigorificada/Aquecida">Frigorificada/Aquecida</option>
-          <option value="Conteinerizada">Conteinerizada</option>
-        </select>
+            <section class="painel painel-resultado" id="resultado" aria-labelledby="titulo-resultado">
+              <div class="painel-cabecalho">
+                <div>
+                  <h2 id="titulo-resultado">Resultado do cálculo</h2>
+                </div>
+              </div>
 
-        <select id="eixos">
-          <option value="">Selecione o número de eixos</option>
-          <option value="2">2 eixos</option>
-          <option value="3">3 eixos</option>
-          <option value="4">4 eixos</option>
-          <option value="5">5 eixos</option>
-          <option value="6">6 eixos</option>
-          <option value="7">7 eixos</option>
-          <option value="9">9 eixos</option>
-        </select>
-
-        <input
-          id="km"
-          type="number"
-          min="0"
-          step="0.1"
-          placeholder="Distância em KM"
-        />
-
-        <input
-          id="combustivel"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Preço do diesel por litro"
-        />
-
-        <input
-          id="consumo"
-          type="number"
-          min="0"
-          step="0.1"
-          placeholder="Consumo do caminhão (km/L)"
-        />
-
-        <input
-          id="pedagio"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Pedágios"
-        />
-
-        <input
-          id="outras"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Outras despesas"
-        />
-
-        <input
-          id="valorCobrado"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Valor cobrado pelo frete"
-        />
-
-        <button id="btn">🧮 CALCULAR ENTREGA</button>
-
-        <button id="salvar" class="sec">💾 SALVAR ENTREGA</button>
-      </section>
-
-      <section>
-        <h2>Resultado</h2>
-
-        <div class="resultado">
-          <div class="indicador">
-            <p>Valor da entrega</p>
-            <h3 id="valor">R$ 0,00</h3>
+              <div class="resultado">
+                <div class="indicador indicador-destaque">
+                  <p>Valor da entrega</p>
+                  <h3 id="valor" aria-live="polite">R$ 0,00</h3>
+                </div>
+                <div class="indicador">
+                  <p>Custo da viagem</p>
+                  <h3 id="custo" aria-live="polite">R$ 0,00</h3>
+                </div>
+                <div class="indicador">
+                  <p>Lucro estimado</p>
+                  <h3 id="lucro" aria-live="polite">R$ 0,00</h3>
+                </div>
+                <div class="indicador">
+                  <p>Margem de lucro</p>
+                  <h3 id="margem" aria-live="polite">0%</h3>
+                </div>
+              </div>
+            </section>
           </div>
 
-          <div class="indicador">
-            <p>Custo da viagem</p>
-            <h3 id="custo">R$ 0,00</h3>
-          </div>
+          <aside class="coluna-lateral">
+            <section class="painel painel-pix" id="pagamento" aria-labelledby="titulo-pix">
+              <div class="painel-cabecalho">
+                <div>
+                  <h2 id="titulo-pix">PIX</h2>
+                </div>
+                <span class="pix-selo" aria-hidden="true">PIX</span>
+              </div>
+              <p class="texto-apoio">
+                Calcule o frete para gerar o código e o QR Code do pagamento.
+              </p>
+              <div class="qr-box">
+                <img id="qr" alt="QR Code para pagamento PIX" hidden />
+                <span id="aviso">O QR Code aparecerá aqui</span>
+              </div>
+              <div id="pix" aria-label="Código PIX" hidden></div>
+              <button id="copiar" class="sec botao-copiar" type="button">Copiar código PIX</button>
+            </section>
 
-          <div class="indicador">
-            <p>Lucro estimado</p>
-            <h3 id="lucro">R$ 0,00</h3>
-          </div>
-
-          <div class="indicador">
-            <p>Margem de lucro</p>
-            <h3 id="margem">0%</h3>
-          </div>
+            <section class="painel painel-historico" id="historico" aria-labelledby="titulo-historico">
+              <div class="painel-cabecalho">
+                <div>
+                  <h2 id="titulo-historico">Histórico de entregas</h2>
+                </div>
+              </div>
+              <div id="lista-entregas" aria-live="polite" aria-relevant="additions text"></div>
+              <div class="acoes-backup">
+                <button id="exportarBackup" class="sec" type="button">Exportar backup</button>
+                <button id="importarBackup" class="sec" type="button">Importar backup</button>
+              </div>
+              <input type="file" id="arquivoBackup" accept=".json" hidden />
+            </section>
+          </aside>
         </div>
-      </section>
+        </main>
 
-      <section>
-        <h2>Pagamento PIX</h2>
-
-        <div class="qr-box">
-          <img id="qr" alt="QR Code para pagamento PIX" />
-
-          <span id="aviso"> QR Code aparece aqui </span>
-        </div>
-
-        <div id="pix"></div>
-
-        <button id="copiar" class="sec">📋 COPIAR PIX</button>
-      </section>
-
-      <section>
-        <h2>Histórico de Entregas</h2>
-
-        <div id="historico"></div>
-
-        <button id="exportarBackup" class="sec">📥 EXPORTAR BACKUP</button>
-
-        <button id="importarBackup" class="sec">📤 IMPORTAR BACKUP</button>
-
-        <input
-          type="file"
-          id="arquivoBackup"
-          accept=".json"
-          style="display: none"
-        />
-      </section>
-
-      <footer class="rodape">
-        Paraná Log Express
-        <span>•</span>
-        Gestão de fretes
-      </footer>
+        <footer class="rodape">
+          <span>Paraná Log Express</span>
+          <span class="rodape-divisor" aria-hidden="true"></span>
+          <span>Exporte um backup pelo histórico para guardar uma cópia ou transferir seus dados.</span>
+        </footer>
+      </div>
     </div>
 
     <script src="script.js"></script>
